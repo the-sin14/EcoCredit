@@ -8,12 +8,11 @@ export const Navbar = () => {
               <a href="">Logo Here</a>
             </div>
             <div className="left-nav">
-              <div className="badges">
-                <button>Badge 1</button>
-                <button>Badge 2</button>
-                <button>Badge 3</button>
+              <div className="link">
+                <a href='#'>Trends</a>
+                <a href='#'>Sustainability</a>
               </div>
-              <button class="hamburger-menu"><img src="./src/assets/icons8-menu-50.png" alt="" /></button>
+              <a href='#'><img src="./src/assets/icons8-user-50.png" alt="" /></a>
             </div>
         </nav>
     </>
