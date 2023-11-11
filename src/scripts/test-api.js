@@ -1,22 +1,17 @@
-const { Configuration, OpenAIApi} = require("openai");
+const { OpenAI } = require("openai");
+require('dotenv').config();
 
-const config = new Configuration({
-    apiKey: process.env.OpenAIApi,
-})
+const openai = new OpenAI({
+    apiKey: process.env.OPEN_AI_KEY,
+});
 
-const openai = new OpenAIApi(config);
-
-const runPrompt = async() => {
-    const prompt = "Tell me a joke about a cat eating pasta";
-
-    const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        maxToken: 1000,
-        temperature: 1,
-    })
-
-    console.log(response.data)
+const runPrompt = async () => {
+    const chatCompletion = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [{ "role": "user", "content": "tell me a joke", }],
+        max_tokens: 100,
+    });
+    console.log(chatCompletion.choices[0].message.content);
 }
 
 runPrompt();
