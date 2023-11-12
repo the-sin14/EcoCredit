@@ -20,6 +20,7 @@
     display: flex;
     justify-content: center; 
     margin-bottom: 20px;
+    height: 100px;
 }
 
 .logo {
@@ -27,7 +28,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    position: fixed;
+    position: absolute;
     left: 30px;
 }
 
@@ -92,7 +93,8 @@ hr {
     border-radius: 20px;
     background-color: var(--light-green);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    margin-left: 100px;
+    margin-left: 0px;
+    margin-right: 90px;
 
 }
 

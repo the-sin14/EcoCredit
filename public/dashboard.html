@@ -52,17 +52,17 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         let pie_chart_labels = ["Sustainable Products", "Non-sustainable Products"];
         let bar_chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-        Papa.parse('/data/sample-spending.csv', {
-            header: true,
-            complete: function (result) {
-                let rows = result.data;
-                console.log(rows);
-            }
-        })
+        var csvfile = "../../src/scripts/simple-transactions.csv";
+
+        $.get(csvfile, function (data) {
+            var csvdata = Papa.parse(data);
+            console.log(csvdata);
+        });
         
         new Chart(document.getElementById('pie-chart'), {
             type: 'pie',
