@@ -84,9 +84,13 @@ hr {
 }
 
 .row1, .row2 {
-    display: flex;
-    flex-direction: row;
+    display: flex; /* Enables flexbox */
+    flex-wrap: wrap; /* Allows items to wrap to the next line if needed */
+    justify-content: space-between; /* Distributes space between items */
+    align-items: center; /* Aligns items vertically */
+    width: 100%; /* Full width of the parent container */
 }
+
 
 .progress-card {
     display: flex;
