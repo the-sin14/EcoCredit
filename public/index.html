@@ -86,6 +86,7 @@
                 Papa.parse(data, {
                     complete: function(results) {
                         let rows = results.data;
+                        let headers = rows[0];
 
                         rows.sort((a, b) => {
                         let dateA = new Date(a.Date), dateB = new Date(b.Date);
@@ -96,15 +97,16 @@
 
                         // Create the table header row
                         let headerRow = document.createElement("tr");
-                        rows[0].forEach((header, index) => {
-                            let th = document.createElement("th");
-                            th.textContent = header;
-                            if (index >= rows[0].length - 2) { // Hide last two headers
-                                th.classList.add("hide-column");
-                            }
-                            headerRow.appendChild(th);
-                        });
-                        table.appendChild(headerRow);
+rows[0].forEach(header => {
+    // Only add headers for the desired columns
+    if (["Date", "item", "location", "Amount"].includes(header)) {
+        let th = document.createElement("th");
+        th.textContent = header;
+        headerRow.appendChild(th);
+    }
+});
+table.appendChild(headerRow);
+
 
                         // Sort by date (assuming date is in the first column)
                         rows.slice(1).sort((a, b) => {
@@ -113,12 +115,11 @@
                         }).forEach(row => {
                             let tr = document.createElement("tr");
                             row.forEach((cell, index) => {
+                            if (index <= 5) { // Only add cells for the first four columns
                                 let td = document.createElement("td");
                                 td.textContent = cell;
-                                if (index >= row.length - 2) { // Hide last two columns
-                                    td.classList.add("hide-column");
-                                }
                                 tr.appendChild(td);
+                            }
                             });
                             table.appendChild(tr);
                         });
@@ -169,6 +170,8 @@
     const responseData = await response.json();
     if (response.ok) {
         addDataToTable(responseData); // Update the table with the new data
+        let headers = document.querySelectorAll("table th").map(th => th.textContent);
+        refreshTableDisplay(responseData, headers);
     } else {
         console.error("Error in adding data:", responseData);
     }
@@ -180,29 +183,35 @@
     document.getElementById('amountInput').value = '';
 });
 
-        // Function to refresh the table display with new CSV data
-        function refreshTableDisplay(rows) {
-            let table = document.querySelector("table tbody");
+    // Function to refresh the table display with new CSV data
+    function refreshTableDisplay(rows, headers) {
+    let table = document.querySelector("table tbody");
 
-            // Clear existing table rows except for the header
-            while (table.firstChild) {
-                table.removeChild(table.firstChild);
+    // Clear existing table rows except for the header
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }
+
+    // Insert the data entry row at the beginning
+    let dataEntryRow = document.getElementById('dataEntryRow');
+    table.appendChild(dataEntryRow.cloneNode(true)); // Clone and insert data entry row
+
+    // Add new data rows to the table
+    rows.forEach(row => {
+        let tr = document.createElement("tr");
+        Object.values(row).forEach((cell, index) => {
+            let td = document.createElement("td");
+            td.textContent = cell;
+
+            // Hide the column if it's "EcoCredit" or "Details"
+            if (["EcoCredit", "Details"].includes(headers[index])) {
+                td.classList.add("hide-column");
             }
 
-            // Insert the data entry row at the beginning
-            let dataEntryRow = document.getElementById('dataEntryRow');
-            table.appendChild(dataEntryRow.cloneNode(true)); // Clone and insert data entry row
-
-            // Add new data rows to the table
-            rows.forEach(row => {
-                let tr = document.createElement("tr");
-                Object.values(row).forEach(cell => {
-                    let td = document.createElement("td");
-                    td.textContent = cell;
-                    tr.appendChild(td);
-                });
-                table.appendChild(tr);
-            });
+            tr.appendChild(td);
+        });
+        table.appendChild(tr);
+    });
         }
 
     });
