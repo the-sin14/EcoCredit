@@ -73,35 +73,8 @@
     <script>
         let pie_chart_labels = ["Sustainable Products", "Non-sustainable Products"];
         let bar_chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-
-        var csvfile = "../../src/scripts/simple-transactions.csv";
-
-        $.get(csvfile, function (data) {
-            var csvdata = Papa.parse(data);
-            console.log(csvdata);
-        });
-        
-        new Chart(document.getElementById('pie-chart'), {
-            type: 'pie',
-            data: {
-                labels: pie_chart_labels,
-                datasets: [{
-                    backgroundColor: ["#e66346", "#254BD0", "#ffbe0b"],
-                    data: [418, 263]
-                }]
-            }
-        })
-
-        new Chart(document.getElementById('bar-chart'), {
-            type: 'bar',
-            data: {
-                labels: bar_chart_labels,
-                datasets: [{
-                    backgroundColor: ["#e66346", "#254BD0", "#ffbe0b"],
-                    data: [343, 434, 123, 436, 564, 745, 454, 676, 234, 324, 565, 0]
-                }]
-            }
-        })
+        let totalSpending, totalSustainableSpending, totalEcoPoints;    
+    
         document.addEventListener('DOMContentLoaded', function() {
         fetch('/data/sample-spending.csv')
             .then(response => response.text())
@@ -119,8 +92,70 @@
                     }
                 });
             });
-    });
 
+            var csvfile = "./sample-spending.csv";  
+            Papa.parse(csvfile, {
+                header: true,
+                download: true,
+                complete: function (results) {
+                    // 2D array with all transactions
+                    data = results.data;
+                    console.log(data);
+
+                    // EcoPoints
+                    totalEcoPoints = data.reduce((accumulator, item) => {
+                        // Check if the 'EcoPoints' property exists and is a valid number
+                        if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                            // Add 'EcoCredit' value to the accumulator
+                            accumulator += parseFloat(item.EcoCredit);
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    let ecoPointsParagraph = document.querySelector('.eco-points p');
+
+                    ecoPointsParagraph.textContent = totalEcoPoints.toString();
+
+                    // Pie Chart
+                    totalSpending = data.reduce((accumulator, { Amount }) => accumulator + parseInt(Amount), 0);
+                    totalSustainableSpending = data.reduce((accumulator, item) => {
+                        // Check if the 'EcoCredit' property exists and is a valid number
+                        if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                            // If 'EcoCredit' is greater than or equal to 2, add it to the accumulator
+                            // Otherwise, add 0 to the accumulator
+                            accumulator += (parseFloat(item.EcoCredit) >= 2) ? parseFloat(item.EcoCredit) : 0;
+                        }
+                        return accumulator;
+                    }, 0);
+                    
+                    // Bar Chart
+                    
+
+                    new Chart(document.getElementById('pie-chart'), {
+                        type: 'pie',
+                        data: {
+                            labels: pie_chart_labels,
+                            datasets: [{
+                                backgroundColor: ["#e66346", "#254BD0", "#ffbe0b"],
+                                data: [totalSpending, totalSustainableSpending]
+                            }]
+                        }
+                    })
+
+                    new Chart(document.getElementById('bar-chart'), {
+                        type: 'bar',
+                        data: {
+                            labels: bar_chart_labels,
+                            datasets: [{
+                                backgroundColor: ["#e66346", "#254BD0", "#ffbe0b"],
+                                data: [343, 434, 123, 436, 564, 745, 454, 676, 234, 324, 565, 0]
+                            }]
+                        }
+                    })
+                }
+            })
+
+        });
 
     </script>
 </body>
