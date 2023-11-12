@@ -32,6 +32,12 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+// In your server.js
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'path-to-dashboard.html'));
+});
+
+
 // Add a server endpoint to handle form submissions and update the CSV file
 app.post('/addData', (req, res) => {
   const newData = req.body;
