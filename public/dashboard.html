@@ -9,11 +9,11 @@
 <body>
     <nav class="navbar">
         <div class="logo">
-            <img src="./src/assets/1.svg" alt="">
+            <img src="../src/assets/1.svg">
             <h1>EcoCredit</h1>
         </div>
         <div class="dashboard-left">
-            <img src="./src/assets/6.svg" alt="">
+            <img src="../src/assets/6.svg" alt="">
         </div>
     </nav>
 
@@ -38,20 +38,37 @@
                 </div>
             </div>
             <div class="bar-graph">
-                <h4>test</h4>
+                <h4>Points (per month)</h4>
+                <div>
+                    <canvas id="bar-chart"></canvas>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        let pie_chart_labels = ["Sustainable Products", "Non-sustainable Products"];
+        let bar_chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
         new Chart(document.getElementById('pie-chart'), {
             type: 'pie',
             data: {
-                labels: ["HTML", "CSS", "JavaScript"],
+                labels: pie_chart_labels,
                 datasets: [{
                     backgroundColor: ["#e66346", "#254BD0", "#ffbe0b"],
-                    data: [418, 263, 414, 586, 332]
+                    data: [418, 263]
+                }]
+            }
+        })
+
+        new Chart(document.getElementById('bar-chart'), {
+            type: 'bar',
+            data: {
+                labels: bar_chart_labels,
+                datasets: [{
+                    backgroundColor: ["#e66346", "#254BD0", "#ffbe0b"],
+                    data: [343, 434, 123, 436, 564, 745, 454, 676, 234, 324, 565, 0]
                 }]
             }
         })

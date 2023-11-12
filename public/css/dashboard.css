@@ -82,8 +82,7 @@ hr {
 }
 
 .progress-card,
-.pie-chart,
-.bar-graph {
+.pie-chart {
     border: 2px solid black;
     height: 200px;
     width: 200px;
@@ -95,7 +94,6 @@ hr {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    border: 2px solid black;
     height: 150px;
     width: 500px;
     margin: 20px 20px;
@@ -108,7 +106,6 @@ hr {
 .eco-points img {
     width: 100px;
     height: auto;
-    
 }
 
 .eco-points h4 {
@@ -126,6 +123,28 @@ hr {
     font-weight: 600;
     background-color: var(--light-green);
 }
+
+.bar-graph {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 500px;
+    margin: 20px 20px;
+    border-radius: 20px;
+    border: 1px solid gray;
+    background-color: var(--light-green);
+}
+
+.bar-graph h4{
+    font-size: 30px;    
+    font-family: "Inria Serif", sans-serif;
+    background-color: var(--light-green);
+    color: white;   
+    margin-bottom: 20px;
+}
+
 
 .main h1 {
     font-size: 50px;
