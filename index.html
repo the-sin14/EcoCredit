@@ -37,9 +37,28 @@
   </div>
 
   <!-- Transactions -->
-  
+  <table>
+
+  </table>
 
   <script type="text/javascript">
+    onload=fetch("./src/scripts/sample-spending.csv").then(res => {
+      return res.text();
+    }).then(data => {
+      let result = data.split('\r\n').map(e => {
+        return e.split(",");
+      })
+      result.forEach(e => {
+        let m = e.map(e => {
+          return `<td>${e}</td>`;
+        })
+        let ce = document.createElement("tr");
+        ce.innerHTML = m;
+        document.querySelector("table").appendChild(ce);
+        console.log(m);
+      })
+    })
+  
     $(document).ready(function() {
       $(".sub-btn").click(function() {
         $(this).next('.sub-menu').slideToggle();
