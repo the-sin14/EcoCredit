@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --cool-blue: #2F66A9
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sidebar {
+    background-color: red;
+    width: 290px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.sidebar .menu {
+    width: 100%;
+    margin-top: 80px;
+}
+
+.sidebar .menu .item {
+    position: relative;
+    cursor: pointer;
+}
+
+.sidebar .menu .item a {
+    color: white;
+    background-color: burlywood;
+    font-size: 16px;
+    text-decoration: none;
+    display: block;
+    padding: 5px 30px;
+    line-height: 60px;
+}
+
+.sidebar .menu .item a:hover {
+    background: darkgray;
+    transition: 0.3s ease;
+}
+
+.sidebar .menu .item .sub-menu {
+    background: red;
+}
+
+.sidebar .menu .item .sub-menu A {
+    padding-left: 80px;
+}
