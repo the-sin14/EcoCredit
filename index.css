@@ -37,12 +37,28 @@
 }
 
 .sidebar {
-    background-color: red;
+    background-color: rgb(83, 117, 159);
     width: 290px;
     height: 100vh;
+    position: fixed; /* Changed from top to fixed */
     top: 0;
     left: 0;
     overflow-y: auto;
+    z-index: 1000; /* Ensures sidebar stays on top of other content */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures that table borders are collapsed into a single border */
+}
+
+table td {
+    border-right: 1px solid #ccc; /* Adds a line between columns */
+    padding: 8px; /* Adds some padding around table cell content */
+}
+
+table tr td:last-child, table tr td:nth-last-child(2) {
+    display: none; /* Hides the last two columns */
 }
 
 .sidebar .menu {
@@ -57,7 +73,7 @@
 
 .sidebar .menu .item a {
     color: white;
-    background-color: burlywood;
+    background-color: rgb(164, 193, 230);
     font-size: 16px;
     text-decoration: none;
     display: block;
