@@ -4,6 +4,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const BankSidePanel = () => {
+    $(document).ready(function() {
+        $('.sub-btn').click(function() {
+            $(this).next('.sub-menu').slideToggle();
+        });
+    });
+
   return (
     <>
         <div className="sidebar">
@@ -12,12 +18,12 @@ export const BankSidePanel = () => {
                   <div className="item"><a href=''>Bill Payments</a></div>
                   <div className="item"><a href=''>Transfer Funds</a></div>
                   <div className="item">
-                    <a href='#' class="sub-btn">EcoCredit</a>
+                    <a href='#' className="sub-btn">EcoCredit</a>
                     <div className="sub-menu">
                         <a href='#' class="sub-item">Dashboard</a>
-                        <a href='#' class="subitem">Achievements</a>
-                        <a href='#' class="subitem">Trends</a>
-                        <a href='#' class="subitem">Leaderboard</a>
+                        <a href='#' class="sub-item">Achievements</a>
+                        <a href='#' class="sub-item">Trends</a>
+                        <a href='#' class="sub-item">Leaderboard</a>
                     </div>
                   </div>
             </div>

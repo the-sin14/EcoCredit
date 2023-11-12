@@ -1,13 +1,51 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EcoCredit</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="dashboard-title">
+      <h1>Bank Dashboard</h1>
+    </div>
+    <div class="left-nav">
+      <img src="./src/assets/icons8-user-50.png" alt="">
+    </div>
+  </nav>
+
+  <!-- Side Bar -->
+  <div class="sidebar">
+    <div class="menu">
+      <div class="item"><a href="#">My Accounts</a></div>
+      <div class="item"><a href="#">Bill Payments</a></div>
+      <div class="item"><a href="#">Transfer Funds</a></div>
+      <div class="item">
+        <a href="#" class="sub-btn">EcoCredit</a>
+        <div class="sub-menu">
+          <a href="#" class="sub-item">Dashboard</a>
+          <a href="#" class="sub-item">Achievement</a>
+          <a href="#" class="sub-item">Trends</a>
+          <a href="#" class="sub-item">Leaderboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transactions -->
+  
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".sub-btn").click(function() {
+        $(this).next('.sub-menu').slideToggle();
+      })
+    });
+  </script>
+
+</body>
 </html>
