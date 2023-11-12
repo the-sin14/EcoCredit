@@ -66,6 +66,13 @@
 
 <!-- Hidden form for submission (no visible elements) -->
 <form id="newDataForm" style="display: none;">
+  <tr style="display: table-row;">
+    <td><input type="text" id="dateInput" placeholder="YYYY-MM-DD" required></td>
+    <td><input type="text" id="itemInput" placeholder="Item" required></td>
+    <td><input type="text" id="locationInput" placeholder="Location" required></td>
+    <td><input type="text" id="amountInput" placeholder="Amount" required></td>
+    <td><button type="submit" id="submitDataBtn">Add</button></td>
+</tr>
 </form>
 
 
@@ -136,37 +143,42 @@
     });
 
         // Handle form submission
-        document.getElementById('newDataForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+        document.getElementById('submitDataBtn').addEventListener('click', async function(event) {
+    event.preventDefault();
 
-            // Get form data
-            let data = {
-                date: document.getElementById('dateInput').value,
-                item: document.getElementById('itemInput').value,
-                location: document.getElementById('locationInput').value,
-                amount: parseFloat(document.getElementById('amountInput').value).toFixed(2)
-            };
+    // Gather data from input fields
+    let data = {
+        date: document.getElementById('dateInput').value,
+        item: document.getElementById('itemInput').value,
+        location: document.getElementById('locationInput').value,
+        amount: parseFloat(document.getElementById('amountInput').value).toFixed(2)
+    };
 
-            // Send data to the server
-            const response = await fetch('/path/to/server/endpoint', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
+    console.log("Data to be sent:", data); // Log the data
 
-            const updatedData = await response.json();
-            // Use updatedData to refresh the table
-            refreshTableDisplay(updatedData);
+    // Send data to the server
+    const response = await fetch('/addData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    });
 
-            // Reset and hide the data entry row
-            document.getElementById('dateInput').value = '';
-            document.getElementById('itemInput').value = '';
-            document.getElementById('locationInput').value = '';
-            document.getElementById('amountInput').value = '';
-            document.getElementById('dataEntryRow').style.display = 'none';
-        });
+    // Handle the response
+    const responseData = await response.json();
+    if (response.ok) {
+        addDataToTable(responseData); // Update the table with the new data
+    } else {
+        console.error("Error in adding data:", responseData);
+    }
+
+    // Reset the input fields
+    document.getElementById('dateInput').value = '';
+    document.getElementById('itemInput').value = '';
+    document.getElementById('locationInput').value = '';
+    document.getElementById('amountInput').value = '';
+});
 
         // Function to refresh the table display with new CSV data
         function refreshTableDisplay(rows) {
