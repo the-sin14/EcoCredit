@@ -101,6 +101,7 @@ hr {
     font-family: "Inria Serif", sans-serif;
     background-color: var(--light-green);
     color: white;
+    margin-bottom: 10px;
 }
 
 .eco-points {
