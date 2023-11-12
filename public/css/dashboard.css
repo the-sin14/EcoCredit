@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center; 
     margin-bottom: 20px;
-    height: 100px;
+    height: 80px;
 }
 
 .logo {
@@ -39,9 +39,9 @@
 }
 
 .navbar h1 {
-    color: var(--green);
-    font-family: "Newsreader", sans-serif;
+    color: black;
     font-size: 32px;
+    background-color: var(--green);
 }
 
 .navbar {
