@@ -21,6 +21,7 @@
     top: 0;
     min-height: 60px;
     background-color: var(--cool-blue);
+    z-index: 1500; /* Ensures sidebar stays on top of other content */
 }
 
 .dashboard-title {
@@ -38,14 +39,102 @@
 }
 
 .sidebar {
-    background-color: var(--off-white);
-    width: 290px;
-    height: 6500px;
+    background-color: rgb(83, 117, 159);
+    width: 220px;
+    height: 100vh;
+    position: fixed; /* Changed from top to fixed */
     top: 0;
     left: 0;
     overflow-y: auto;
-    float: left;
+    z-index: 1000; /* Ensures sidebar stays on top of other content */
 }
+
+.sub-menu {
+    display: none; /* Keep it initially hidden */
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    position: relative; /* Change to relative */
+    width: 100%; /* Set width to 100% of its parent */
+    z-index: 1500; /* Increase z-index if necessary */
+}
+
+/* Adjust the sidebar menu item to allow for submenu expansion */
+.sidebar .menu .item {
+    position: relative; /* Ensure this is relative for correct submenu positioning */
+}
+
+
+.sub-menu a {
+    color: black; /* Submenu item text color */
+    padding: 12px 16px; /* Padding for submenu items */
+    text-decoration: none; /* Remove underline from links */
+    display: block; /* Make each link fill its container */
+}
+
+.sub-menu a:hover {
+    background-color: #ddd; /* Hover background color */
+}
+
+.add-data-button {
+    font-size: 24px;
+    padding: 0.25em 0.75em;
+    margin-top: 10px; /* Space above the button */
+    cursor: pointer;
+    border: none;
+    border-radius: 25px; /* Makes the button round */
+    background-color: var(--cool-blue);
+    color: white;
+    position: relative; /* Position relative to its normal position */
+    z-index: 10; /* Ensure it's above other items */
+  }
+  
+  /* Hover effect for the button */
+  .add-data-button:hover {
+    background-color: #1b4f72; /* A darker blue for hover effect */
+  }
+  
+  /* Style for the input fields in the table */
+  table input[type="text"] {
+    width: 100%; /* Make input take up the full cell width */
+    padding: 5px;
+    margin: 4px 0;
+    box-sizing: border-box;
+  }
+  
+  /* Style for the data entry row */
+  #dataEntryRow td {
+    padding: 0; /* Remove default padding to fit the input */
+  }
+
+  
+
+/* Main content area */
+.main-content {
+    margin-left: 220px; /* Same as sidebar width */
+    padding: 20px;
+}
+
+
+
+table {
+    width: calc(100% - 40px); /* Adjust width and account for padding */
+    border-collapse: collapse;
+}
+
+table td {
+    border-right: 1px solid #ccc;
+    padding: 8px;
+}
+
+table tr:not(#dataEntryRow) td:last-child, table tr:not(#dataEntryRow) td:nth-last-child(2) {
+    display: none;
+}
+
+
+.hide-column {
+    display: none;
+  }
+  
 
 .sidebar .menu {
     width: 100%;
@@ -59,7 +148,7 @@
 
 .sidebar .menu .item a {
     color: white;
-    background-color: burlywood;
+    background-color: rgb(164, 193, 230);
     font-size: 16px;
     text-decoration: none;
     display: block;
