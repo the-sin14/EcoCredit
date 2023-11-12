@@ -9,8 +9,8 @@ const openai = new OpenAI({
     apiKey: process.env.OPEN_AI_KEY,
 });
 
-const csvFilePath = 'path/to/your/sample_spending.csv'; // Replace with the path to your CSV file
-const updatedCsvFilePath = 'path/to/your/updated_sample_spending.csv'; // Replace with the path to where you want to save the updated CSV
+const csvFilePath = '../../public/sample-spending.csv'; // Replace with the path to your CSV file
+const updatedCsvFilePath = '../../public/sample-spending.csv'; // Replace with the path to where you want to save the updated CSV
 
 // Function to assess an item using OpenAI
 const assessItemUsingAI = async (item) => {
