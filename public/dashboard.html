@@ -53,7 +53,7 @@
         let pie_chart_labels = ["Sustainable Products", "Non-sustainable Products"];
         let bar_chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-        Papa.parse('../data/sample-spending.csv', {
+        Papa.parse('/data/sample-spending.csv', {
             header: true,
             complete: function (result) {
                 let rows = result.data;
