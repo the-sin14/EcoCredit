@@ -127,83 +127,63 @@
         dataEntryRow.style.display = dataEntryRow.style.display === 'none' ? 'table-row' : 'none';
     });
 
-
-
         // Handle form submission
-    document.getElementById('newDataForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+        document.getElementById('newDataForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
 
-        // Get form data
-        let date = document.getElementById('dateInput').value;
-        let item = document.getElementById('itemInput').value;
-        let location = document.getElementById('locationInput').value;
-        let amount = parseFloat(document.getElementById('amountInput').value).toFixed(2);
+            // Get form data
+            let data = {
+                date: document.getElementById('dateInput').value,
+                item: document.getElementById('itemInput').value,
+                location: document.getElementById('locationInput').value,
+                amount: parseFloat(document.getElementById('amountInput').value).toFixed(2)
+            };
 
-        // Append new data to CSV
-        let newRow = [date, item, location, amount];
-        appendToCSV(newRow);
+            // Send data to the server
+            const response = await fetch('/path/to/server/endpoint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
 
-        // Reset and hide the data entry row
-        this.reset();
-        document.getElementById('dataEntryRow').style.display = 'none';
-    });
+            const updatedData = await response.json();
+            // Use updatedData to refresh the table
+            refreshTableDisplay(updatedData);
 
-        // Function to append data to CSV and refresh table
-        function appendToCSV(newRow) {
-            // Fetch existing CSV data and append new row
-            fetch("./src/scripts/sample-spending.csv")
-                .then(res => res.text())
-                .then(data => {
-                    Papa.parse(data, {
-                        complete: function(results) {
-                            let rows = results.data;
-                            // Append new row
-                            rows.push(newRow);
-                            // Sort, convert back to CSV and overwrite file
-                            updateAndOverwriteCSV(rows);
-                        }
-                    });
-                });
-        }
-
-        // Function to update CSV data and overwrite existing CSV file
-        function updateAndOverwriteCSV(rows) {
-            // Sort rows by date
-            rows.sort((a, b) => new Date(b[0]) - new Date(a[0]));
-            // Convert to CSV
-            let csv = Papa.unparse(rows);
-            // Overwrite the CSV file here
-            // Since you cannot write to a file from the client side due to browser security,
-            // you will need to implement a server-side solution to handle file writing.
-
-            // Refresh table display
-            refreshTableDisplay(rows);
-        }
-
-    // Function to refresh the table display with new CSV data
-    function refreshTableDisplay(rows) {
-    let table = document.querySelector("table tbody");
-
-    // Clear existing table rows except for the header
-    while (table.firstChild) {
-        table.removeChild(table.firstChild);
-    }
-
-    // Insert the data entry row at the beginning
-    let dataEntryRow = document.getElementById('dataEntryRow');
-    table.appendChild(dataEntryRow.cloneNode(true)); // Clone and insert data entry row
-
-    // Add new data rows to the table
-    rows.slice(1).forEach(row => {
-        let tr = document.createElement("tr");
-        row.forEach(cell => {
-            let td = document.createElement("td");
-            td.textContent = cell;
-            tr.appendChild(td);
+            // Reset and hide the data entry row
+            document.getElementById('dateInput').value = '';
+            document.getElementById('itemInput').value = '';
+            document.getElementById('locationInput').value = '';
+            document.getElementById('amountInput').value = '';
+            document.getElementById('dataEntryRow').style.display = 'none';
         });
-        table.appendChild(tr);
-    });
-}
+
+        // Function to refresh the table display with new CSV data
+        function refreshTableDisplay(rows) {
+            let table = document.querySelector("table tbody");
+
+            // Clear existing table rows except for the header
+            while (table.firstChild) {
+                table.removeChild(table.firstChild);
+            }
+
+            // Insert the data entry row at the beginning
+            let dataEntryRow = document.getElementById('dataEntryRow');
+            table.appendChild(dataEntryRow.cloneNode(true)); // Clone and insert data entry row
+
+            // Add new data rows to the table
+            rows.forEach(row => {
+                let tr = document.createElement("tr");
+                Object.values(row).forEach(cell => {
+                    let td = document.createElement("td");
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+        }
 
     });
 </script>
