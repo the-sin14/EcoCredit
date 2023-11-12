@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 
 // In your server.js
 app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, 'path-to-dashboard.html'));
+  res.sendFile(path.join(__dirname, '/public/dashboard.html'));
 });
 
 
