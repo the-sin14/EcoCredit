@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoBoard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="./src/assets/1.svg" alt="">
+            <h1>EcoCredit</h1>
+        </div>
+        <div class="dashboard-left">
+            <img src="./src/assets/6.svg" alt="">
+        </div>
+    </nav>
+
+    <hr>
+
+    <div class="main">
+        <h1>Sustainability Tracker</h1>
+        <div class="row1">
+            <div class="progress-card">
+                <h4>test</h4>
+            </div>
+            <div class="eco-points">
+                <h4>Your EcoPoints:</h4>
+                <p>1008</p>
+            </div>
+        </div>
+        <div class="row2">
+            <div class="pie-chart">
+                <h4>Total Money Spent:</h4>
+                <div>
+                    <canvas id="pie-chart"></canvas>
+                </div>
+            </div>
+            <div class="bar-graph">
+                <h4>test</h4>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="chart.min.js"></script>
+    <script>
+        new Chart(document.getElementById('pie-chart'), {
+            type: 'pie'
+
+        })
+    </script>
+</body>
+</html>

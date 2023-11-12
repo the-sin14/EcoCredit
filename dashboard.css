@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inter&family=Newsreader:ital,opsz,wght@0,6..72,200;0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,200;1,6..72,300;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700;1,6..72,800&display=swap');
+
+:root {
+    --cool-blue: #2F66A9;
+    --off-white: #FAF9F6;
+    --green: #426B1F;
+    --light-green: #A0B58F;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--off-white);
+}
+
+/* Navbar */
+
+.navbar {
+    display: flex;
+    justify-content: center; 
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 30px;
+}
+
+
+.navbar img {
+    width: 100px;
+    height: auto;
+}
+
+.navbar h1 {
+    color: var(--green);
+    font-family: "Newsreader", sans-serif;
+    font-size: 32px;
+}
+
+.dashboard-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    right: -700px;
+}
+
+.dashboard-left img {
+    margin-top: 10px;
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+}
+
+.dashboard-middle h2 {
+    color: var(--green);
+    font-family: "Newsreader", sans-serif;
+    font-size: 32px;
+}
+
+hr {
+    border: 1px solid black;
+}
+
+/*  Main Dashboard */
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row1, .row2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.progress-card,
+.pie-chart,
+.bar-graph {
+    border: 2px solid black;
+    height: 200px;
+    width: 200px;
+    margin: 20px 20px;
+}
+
+.eco-points {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    height: 150px;
+    width: 500px;
+    margin: 20px 20px;
+    border-radius: 20px;
+    background-color: var(--light-green);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 400px;
+}
+
+.eco-points img {
+    width: 100px;
+    height: auto;
+    
+}
+
+.eco-points h4 {
+    font-size: 30px;
+    font-family: "Inria Serif", sans-serif;
+    background-color: var(--light-green);
+    color: white;
+    margin-right: 40px;
+}
+
+.eco-points p {
+    font-size: 50px;
+    font-family: "Inter", sans-serif;
+    color: white;
+    font-weight: 600;
+    background-color: var(--light-green);
+}
+
+.main h1 {
+    font-size: 50px;
+    font-family: "Newsreader", sans-serif;
+    color: var(--green);
+    margin-top: 50px;
+    font-weight: 600;
+}

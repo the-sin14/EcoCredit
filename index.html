@@ -27,7 +27,7 @@
       <div class="item">
         <a href="#" class="sub-btn">EcoCredit</a>
         <div class="sub-menu">
-          <a href="#" class="sub-item">Dashboard</a>
+          <a href="./dashboard.html" class="sub-item">Dashboard</a>
           <a href="#" class="sub-item">Achievement</a>
           <a href="#" class="sub-item">Trends</a>
           <a href="#" class="sub-item">Leaderboard</a>
@@ -37,10 +37,13 @@
   </div>
 
   <!-- Transactions -->
-  <table>
-
-  </table>
-
+  <div class="body">
+    <h2>Transaction History</h2>
+    <table>
+    
+    </table>
+  </div>
+  
   <script type="text/javascript">
     onload=fetch("./src/scripts/sample-spending.csv").then(res => {
       return res.text();
