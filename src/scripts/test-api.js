@@ -31,7 +31,6 @@ const assessItemUsingAI = async (item) => {
     return { ecoCredit, details };
 };
 
-
 // Function to update the original CSV with assessments
 const updateCsv = async (data) => {
     const csvWriter = createCsvWriter({
