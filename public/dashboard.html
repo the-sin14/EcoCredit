@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,29 +13,29 @@
     <!-- Updated Navbar -->
     <nav class="navbar">
         <div class="dashboard-title">
-          <h1>Dashboard</h1>
+            <h1>Dashboard</h1>
         </div>
         <div class="left-nav">
-          <!-- <img src="profile.png" alt=""> later --> 
+            <!-- <img src="profile.png" alt=""> later -->
         </div>
     </nav>
 
     <div class="sidebar">
         <div class="menu">
-          <div class="item"><a href="./index.html" class="sub-item">My Account</a></div>
-          <div class="item"><a href="#">Bill Payments</a></div>
-          <div class="item"><a href="#">Transfer Funds</a></div>
-          <div class="item">
-            <a href="" id="ecoCreditBtn" class="sub-btn">EcoCredit</a>
-            <div id="ecoCreditSubMenu" class="sub-menu" style="display: none;">
-              <a href="./dashboard.html" class="sub-item">Dashboard</a>
-              <a href="./achievement.html" class="sub-item">Achievement</a>
-              <a href="./trends.html" class="sub-item">Trends</a>
-              <a href="./leaderboard.html" class="sub-item">Leaderboard</a>
+            <div class="item"><a href="./index.html" class="sub-item">My Account</a></div>
+            <div class="item"><a href="#">Bill Payments</a></div>
+            <div class="item"><a href="#">Transfer Funds</a></div>
+            <div class="item">
+                <a href="" id="ecoCreditBtn" class="sub-btn">EcoCredit</a>
+                <div id="ecoCreditSubMenu" class="sub-menu" style="display: none;">
+                    <a href="./dashboard.html" class="sub-item">Dashboard</a>
+                    <a href="./achievement.html" class="sub-item">Achievement</a>
+                    <a href="./trends.html" class="sub-item">Trends</a>
+                    <a href="./leaderboard.html" class="sub-item">Leaderboard</a>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 
     <div class="main" style="margin-left: [appropriate value];">
         <h1>Sustainability Tracker</h1>
@@ -73,27 +74,27 @@
     <script>
         let pie_chart_labels = ["Sustainable Products", "Non-sustainable Products"];
         let bar_chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        let totalSpending, totalSustainableSpending, totalEcoPoints, totalEcoPointsJan, totalEcoPointsFeb, totalEcoPointsMar, totalEcoPointsApr, totalEcoPointsMay, totalEcoPointsJun, totalEcoPointsJul, totalEcoPointsAug, totalEcoPointsSep, totalEcoPointsOct, totalEcoPointsNov, totalEcoPointsDec;    
-    
-        document.addEventListener('DOMContentLoaded', function() {
-        fetch('/data/sample-spending.csv')
-            .then(response => response.text())
-            .then(csvData => {
-                Papa.parse(csvData, {
-                    header: true,
-                    complete: function(results) {
-                        let data = results.data;
-                        // console.log(data); // Do something with the data
-                        
-                        //AI
+        let totalSpending, totalSustainableSpending, totalEcoPoints, totalEcoPointsJan, totalEcoPointsFeb, totalEcoPointsMar, totalEcoPointsApr, totalEcoPointsMay, totalEcoPointsJun, totalEcoPointsJul, totalEcoPointsAug, totalEcoPointsSep, totalEcoPointsOct, totalEcoPointsNov, totalEcoPointsDec;
 
-                        //updatePieChart(data);
-                        //updateBarChart(data);
-                    }
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/data/sample-spending.csv')
+                .then(response => response.text())
+                .then(csvData => {
+                    Papa.parse(csvData, {
+                        header: true,
+                        complete: function (results) {
+                            let data = results.data;
+                            // console.log(data); // Do something with the data
+
+                            //AI
+
+                            //updatePieChart(data);
+                            //updateBarChart(data);
+                        }
+                    });
                 });
-            });
 
-            var csvfile = "./sample-spending.csv";  
+            var csvfile = "./sample-spending.csv";
             Papa.parse(csvfile, {
                 header: true,
                 download: true,
@@ -118,6 +119,7 @@
 
                     // Pie Chart
                     totalSpending = data.reduce((accumulator, { Amount }) => accumulator + parseInt(Amount), 0);
+                    
                     totalSustainableSpending = data.reduce((accumulator, item) => {
                         // Check if the 'EcoCredit' property exists and is a valid number
                         if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
@@ -127,7 +129,9 @@
                         }
                         return accumulator;
                     }, 0);
-                    
+
+                    console.log(totalSustainableSpending);
+
                     // Bar Chart
                     totalEcoPointsJan = data.reduce((accumulator, item) => {
                         // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
