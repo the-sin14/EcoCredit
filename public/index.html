@@ -132,8 +132,8 @@
             amount: parseFloat(document.getElementById('amountInput').value).toFixed(2)
         };
 
-  console.log(data); 
-  
+        console.log("Data to be sent:", data); // Log the data
+
   // Send data to the server
   const response = await fetch('/addData', {
     method: 'POST',
@@ -163,30 +163,28 @@
 });
 
 
-        // Function to add data to the table
-function addDataToTable(data) {
-  let table = document.querySelector("table tbody");
-  let tr = document.createElement("tr");
+    // Function to add data to the table
+    function addDataToTable(data) {
+    let table = document.querySelector("table tbody");
+    let tr = document.createElement("tr");
 
-  // Create table cells for each data field
-  let dateTd = document.createElement("td");
-  dateTd.textContent = data.date;
-  let itemTd = document.createElement("td");
-  itemTd.textContent = data.item;
-  let locationTd = document.createElement("td");
-  locationTd.textContent = data.location;
-  let amountTd = document.createElement("td");
-  amountTd.textContent = data.amount;
+    let dateTd = document.createElement("td");
+    dateTd.textContent = data.date;
+    tr.appendChild(dateTd);
 
-  // Append the cells to the table row
-  tr.appendChild(dateTd);
-  tr.appendChild(itemTd);
-  tr.appendChild(locationTd);
-  tr.appendChild(amountTd);
+    let itemTd = document.createElement("td");
+    itemTd.textContent = data.item;
+    tr.appendChild(itemTd);
 
-  // Insert the new data row at the beginning (after the data entry row)
-  let dataEntryRow = document.getElementById('dataEntryRow');
-  table.insertBefore(tr, dataEntryRow.nextSibling);
+    let locationTd = document.createElement("td");
+    locationTd.textContent = data.location; // Ensure location data is added
+    tr.appendChild(locationTd);
+
+    let amountTd = document.createElement("td");
+    amountTd.textContent = data.amount; // Ensure amount data is added
+    tr.appendChild(amountTd);
+
+    table.insertBefore(tr, table.firstChild); // Insert at the beginning of the table
 }
 
 

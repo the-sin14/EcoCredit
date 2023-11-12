@@ -36,8 +36,11 @@ app.get('/', (req, res) => {
 app.post('/addData', (req, res) => {
   const newData = req.body;
 
+  // Updated path to point to the existing sample-spending.csv file
+  const csvFilePath = path.join(__dirname, 'src', 'scripts', 'sample-spending.csv');
+
   const csvWriter = createObjectCsvWriter({
-    path: 'path-to-your-csv-file.csv', // Ensure this path is correct
+    path: csvFilePath, // Correct path to your existing CSV file
     header: [
       { id: 'date', title: 'DATE' },
       { id: 'item', title: 'ITEM' },
