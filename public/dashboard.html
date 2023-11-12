@@ -15,7 +15,7 @@
           <h1>Dashboard</h1>
         </div>
         <div class="left-nav">
-          <img src="./src/assets/icons8-user-50.png" alt="">
+          <!-- <img src="profile.png" alt=""> later --> 
         </div>
     </nav>
 
@@ -76,13 +76,21 @@
         let totalSpending, totalSustainableSpending, totalEcoPoints;    
     
         document.addEventListener('DOMContentLoaded', function() {
-            var ecoCreditBtn = document.getElementById('ecoCreditBtn');
-            var ecoCreditSubMenu = document.getElementById('ecoCreditSubMenu');
-        
-            ecoCreditBtn.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent the default link behavior
-                var display = ecoCreditSubMenu.style.display;
-                ecoCreditSubMenu.style.display = display === 'block' ? 'none' : 'block';
+        fetch('/data/sample-spending.csv')
+            .then(response => response.text())
+            .then(csvData => {
+                Papa.parse(csvData, {
+                    header: true,
+                    complete: function(results) {
+                        let data = results.data;
+                        console.log(data); // Do something with the data
+                        
+                        //AI
+
+                        //updatePieChart(data);
+                        //updateBarChart(data);
+                    }
+                });
             });
 
             var csvfile = "./sample-spending.csv";  
@@ -120,6 +128,9 @@
                         return accumulator;
                     }, 0);
                     
+                    // Bar Chart
+                    
+
                     new Chart(document.getElementById('pie-chart'), {
                         type: 'pie',
                         data: {
