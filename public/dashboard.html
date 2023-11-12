@@ -10,11 +10,11 @@
 <body>
     <nav class="navbar">
         <div class="logo">
-            <img src="../src/assets/1.svg">
+            <img src="./1.svg">
             <h1>EcoCredit</h1>
         </div>
         <div class="dashboard-left">
-            <img src="../src/assets/6.svg" alt="">
+            <img src="./6.svg" alt="">
         </div>
     </nav>
 
@@ -48,10 +48,19 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
         let pie_chart_labels = ["Sustainable Products", "Non-sustainable Products"];
         let bar_chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
+        Papa.parse('../data/sample-spending.csv', {
+            header: true,
+            complete: function (result) {
+                let rows = result.data;
+                console.log(rows);
+            }
+        })
+        
         new Chart(document.getElementById('pie-chart'), {
             type: 'pie',
             data: {
