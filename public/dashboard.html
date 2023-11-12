@@ -4,23 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoBoard</title>
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="./css/dashboard.css">
-    <link rel="shortcut icon" href="../src/assets/1.ico" type="image/png">
 </head>
+
 <body>
+    <!-- Updated Navbar -->
     <nav class="navbar">
-        <div class="logo">
-            <img src="./1.svg">
-            <h1>EcoCredit</h1>
+        <div class="dashboard-title">
+          <h1>Leaderboard</h1>
         </div>
-        <div class="dashboard-left">
-            <img src="./6.svg" alt="">
+        <div class="left-nav">
+          <img src="./src/assets/icons8-user-50.png" alt="">
         </div>
     </nav>
 
+    <div class="sidebar">
+        <div class="menu">
+          <div class="item"><a href="./index.html" class="sub-item">My Account</a></div>
+          <div class="item"><a href="#">Bill Payments</a></div>
+          <div class="item"><a href="#">Transfer Funds</a></div>
+          <div class="item">
+            <a href="" id="ecoCreditBtn" class="sub-btn">EcoCredit</a>
+            <div id="ecoCreditSubMenu" class="sub-menu" style="display: none;">
+              <a href="./dashboard.html" class="sub-item">Dashboard</a>
+              <a href="./achievement.html" class="sub-item">Achievement</a>
+              <a href="./trends.html" class="sub-item">Trends</a>
+              <a href="./leaderboard.html" class="sub-item">Leaderboard</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <hr>
 
-    <div class="main">
+    <div class="main" style="margin-left: [appropriate value];">
         <h1>Sustainability Tracker</h1>
         <div class="row1">
             <div class="progress-card">
@@ -52,6 +70,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <!-- Common scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
         let pie_chart_labels = ["Sustainable Products", "Non-sustainable Products"];
@@ -85,6 +104,19 @@
                 }]
             }
         })
+        document.addEventListener('DOMContentLoaded', function() {
+            var ecoCreditBtn = document.getElementById('ecoCreditBtn');
+            var ecoCreditSubMenu = document.getElementById('ecoCreditSubMenu');
+        
+            ecoCreditBtn.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default link behavior
+                var display = ecoCreditSubMenu.style.display;
+                ecoCreditSubMenu.style.display = display === 'block' ? 'none' : 'block';
+            });
+        
+            // ...rest of your existing JavaScript code...
+        });
+
     </script>
 </body>
 </html>

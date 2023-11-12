@@ -44,6 +44,12 @@
     font-size: 32px;
 }
 
+.navbar {
+    background-color: rgb(66,107,31); /* Replace with your desired color */
+    /* other styles */
+}
+
+
 .dashboard-left {
     display: flex;
     justify-content: center;
@@ -72,15 +78,20 @@ hr {
 /*  Main Dashboard */
 
 .main {
+    margin-left: 250px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .row1, .row2 {
-    display: flex;
-    flex-direction: row;
+    display: flex; /* Enables flexbox */
+    flex-wrap: wrap; /* Allows items to wrap to the next line if needed */
+    justify-content: space-between; /* Distributes space between items */
+    align-items: center; /* Aligns items vertically */
+    width: 100%; /* Full width of the parent container */
 }
+
 
 .progress-card {
     display: flex;
