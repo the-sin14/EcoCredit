@@ -8,7 +8,6 @@
   <link rel="icon" href="../src/assets/1.svg">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-
 </head>
 <body>
   <!-- Navbar -->
@@ -39,75 +38,72 @@
     </div>
   </div>
 
-<!-- Main Content -->
-<div class="main-content">
-  <!-- Add New Data Button -->
-  <button id="addDataBtn" class="add-data-button">+</button>
-  
-  <!-- Table with integrated data entry form as the first row -->
-  <table>
-    <thead>
-      <!-- The header will be populated by JavaScript -->
-    </thead>
-    <tbody>
-      <!-- Data Entry Row (initially hidden) -->  
-      <tr id="dataEntryRow" style="display: table-row;">
-        <td><input type="text" id="dateInput" placeholder="YYYY-MM-DD" required></td>
-        <td><input type="text" id="itemInput" placeholder="Item" required></td>
-        <td><input type="text" id="locationInput" placeholder="Location" required></td>
-        <td><input type="text" id="amountInput" placeholder="Amount" required></td>
-        <td><button id="submitDataBtn">Add</button></td>
-      </tr>
-      <!-- Existing table data rows will be dynamically inserted here -->
-    </tbody>
-  </table>
-</div>
-
-
-<!-- Hidden form for submission (no visible elements) -->
-<form id="newDataForm" style="display: none;">
-</form>
-
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Add New Data Button -->
+    <button id="addDataBtn" class="add-data-button">+</button>
+    
+    <!-- Table with integrated data entry form as the first row -->
+    <table>
+      <thead>
+        <!-- The header will be populated by JavaScript -->
+      </thead>
+      <tbody>
+        <!-- Data Entry Row (initially hidden) -->
+        <tr id="dataEntryRow" style="display: table-row;">
+          <td><input type="text" id="dateInput" placeholder="YYYY-MM-DD" required></td>
+          <td><input type="text" id="itemInput" placeholder="Item" required></td>
+          <td><input type="text" id="locationInput" placeholder="Location" required></td>
+          <td><input type="text" id="amountInput" placeholder="Amount" required></td>
+          <td><button id="submitDataBtn">Add</button></td>
+        </tr>
+        <!-- Existing table data rows will be dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
 
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
-        // Fetch and parse CSV data
         fetch("/data/sample-spending.csv")
-
             .then(res => res.text())
             .then(data => {
                 Papa.parse(data, {
+                    header: true,
                     complete: function(results) {
                         let rows = results.data;
-                        let table = document.querySelector("table");
 
+                        rows.sort((a, b) => {
+                        let dateA = new Date(a.Date), dateB = new Date(b.Date);
+                        return dateB - dateA; // For descending order
+                    });
+                    
+                        let table = document.querySelector("table");
+                        let visibleColumns = ['Date', 'item', 'location', 'Amount'];
+    
                         // Create the table header row
                         let headerRow = document.createElement("tr");
-                        rows[0].forEach((header, index) => {
+                        Object.keys(rows[0]).forEach(header => {
                             let th = document.createElement("th");
                             th.textContent = header;
-                            if (index >= rows[0].length - 2) { // Hide last two headers
+                            if (!visibleColumns.includes(header)) {
                                 th.classList.add("hide-column");
                             }
                             headerRow.appendChild(th);
                         });
-                        table.appendChild(headerRow);
-
-                        // Sort by date (assuming date is in the first column)
-                        rows.slice(1).sort((a, b) => {
-                            let dateA = new Date(a[0]), dateB = new Date(b[0]);
-                            return dateB - dateA; // For descending order
-                        }).forEach(row => {
+                        table.querySelector('thead').appendChild(headerRow);
+    
+                        // Generate data rows
+                        rows.forEach(row => {
                             let tr = document.createElement("tr");
-                            row.forEach((cell, index) => {
+                            Object.entries(row).forEach(([header, cell]) => {
                                 let td = document.createElement("td");
                                 td.textContent = cell;
-                                if (index >= row.length - 2) { // Hide last two columns
+                                if (!visibleColumns.includes(header)) {
                                     td.classList.add("hide-column");
                                 }
                                 tr.appendChild(td);
                             });
-                            table.appendChild(tr);
+                            table.querySelector('tbody').appendChild(tr);
                         });
                     }
                 });
@@ -115,8 +111,7 @@
 
         // Event listener for the EcoCredit button
         document.getElementById('ecoCreditBtn').addEventListener('click', function(event) {
-            console.log("EcoCredit button clicked"); // Debugging line
-            event.preventDefault(); // Prevents default link behavior
+            event.preventDefault();
             var submenu = document.getElementById('ecoCreditSubMenu');
             submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
         });
@@ -125,42 +120,88 @@
         document.getElementById('addDataBtn').addEventListener('click', function(event) {
         event.preventDefault();
         var dataEntryRow = document.getElementById('dataEntryRow');
-        console.log("Toggling data entry row"); // Debugging line
         dataEntryRow.style.display = dataEntryRow.style.display === 'none' ? 'table-row' : 'none';
     });
 
-        // Handle form submission
-        document.getElementById('newDataForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+        // Event listener for the submit action on the Add button
+    document.getElementById('submitDataBtn').addEventListener('click', async function(event) {
+        event.preventDefault(); // This prevents the default form submission behavior
 
-            // Get form data
-            let data = {
-                date: document.getElementById('dateInput').value,
-                item: document.getElementById('itemInput').value,
-                location: document.getElementById('locationInput').value,
-                amount: parseFloat(document.getElementById('amountInput').value).toFixed(2)
-            };
 
-            // Send data to the server
-            const response = await fetch('/path/to/server/endpoint', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
+          // Get form data
+          let data = {
+            date: document.getElementById('dateInput').value,
+            item: document.getElementById('itemInput').value,
+            location: document.getElementById('locationInput').value,
+            amount: parseFloat(document.getElementById('amountInput').value).toFixed(2)
+        };
 
-            const updatedData = await response.json();
-            // Use updatedData to refresh the table
-            refreshTableDisplay(updatedData);
+        console.log("Data to be sent:", data); // Log the data
 
-            // Reset and hide the data entry row
-            document.getElementById('dateInput').value = '';
-            document.getElementById('itemInput').value = '';
-            document.getElementById('locationInput').value = '';
-            document.getElementById('amountInput').value = '';
-            document.getElementById('dataEntryRow').style.display = 'none';
-        });
+  // Send data to the server
+  const response = await fetch('/addData', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  });
+
+  // Handle the response from the server
+  response.json().then(responseData => {
+    if (responseData.message === 'Data added successfully') {
+      // Update the table here
+      addDataToTable(data);
+
+      // Reset and hide the data entry form
+      document.getElementById('dateInput').value = '';
+      document.getElementById('itemInput').value = '';
+      document.getElementById('locationInput').value = '';
+      document.getElementById('amountInput').value = '';
+      document.getElementById('dataEntryRow').style.display = 'none';
+    } else {
+      // Handle error
+      console.error('Error adding data:', responseData.message);
+    }
+  });
+});
+
+
+    // Function to add data to the table
+    function addDataToTable(data) {
+    let table = document.querySelector("table tbody");
+    let tr = document.createElement("tr");
+
+    // Add cells for visible columns
+    let dateTd = document.createElement("td");
+    dateTd.textContent = data.date;
+    tr.appendChild(dateTd);
+
+    let itemTd = document.createElement("td");
+    itemTd.textContent = data.item;
+    tr.appendChild(itemTd);
+
+    let locationTd = document.createElement("td");
+    locationTd.textContent = data.location;
+    tr.appendChild(locationTd);
+
+    let amountTd = document.createElement("td");
+    amountTd.textContent = data.amount;
+    tr.appendChild(amountTd);
+
+    // Add hidden cells for EcoCredit and Details
+    let ecoCreditTd = document.createElement("td");
+    ecoCreditTd.classList.add("hide-column");
+    tr.appendChild(ecoCreditTd);
+
+    let detailsTd = document.createElement("td");
+    detailsTd.classList.add("hide-column");
+    tr.appendChild(detailsTd);
+
+    table.insertBefore(tr, table.firstChild); // Insert at the beginning of the table
+}
+
+
 
         // Function to refresh the table display with new CSV data
         function refreshTableDisplay(rows) {
