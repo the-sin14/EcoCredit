@@ -169,3 +169,21 @@ table tr:not(#dataEntryRow) td:last-child, table tr:not(#dataEntryRow) td:nth-la
 td {
     border: 2px solid black;
 }
+
+#achievement-side-image {
+    transform: rotate(-90deg); /* Negative value for left rotation */
+}
+
+.responsive-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.rotated-image {
+    transform: rotate(-90deg);
+    transform-origin: center;
+}
+
+
