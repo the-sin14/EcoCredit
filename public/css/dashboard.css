@@ -81,8 +81,7 @@ hr {
     flex-direction: row;
 }
 
-.progress-card,
-.pie-chart {
+.progress-card {
     border: 2px solid black;
     height: 200px;
     width: 200px;
@@ -133,8 +132,9 @@ hr {
     width: 500px;
     margin: 20px 20px;
     border-radius: 20px;
-    border: 1px solid gray;
     background-color: var(--light-green);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 100px;
 }
 
 .bar-graph h4{
@@ -145,6 +145,26 @@ hr {
     margin-bottom: 20px;
 }
 
+.pie-chart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 500px;
+    margin: 20px 20px;
+    border-radius: 20px;
+    background-color: var(--light-green);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.pie-chart h4 {
+    font-size: 30px;
+    font-family: "Inria Serif", sans-serif;
+    background-color: var(--light-green);
+    color: white;
+    margin-bottom: 20px;
+}
 
 .main h1 {
     font-size: 50px;
