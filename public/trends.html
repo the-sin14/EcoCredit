@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievement</title>
+    <link rel="stylesheet" href="css/index.css">
+    <!-- Include other necessary scripts and stylesheets -->
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="dashboard-title">
+          <h1>Bank Dashboard</h1>
+        </div>
+        <div class="left-nav">
+          <img src="./src/assets/icons8-user-50.png" alt="">
+        </div>
+      </nav>
+
+    <!-- Side Bar -->
+  <!-- Side Bar -->
+  <div class="sidebar">
+    <div class="menu">
+      <div class="item"><a href="./index.html" class="sub-item">My Account</a></div>
+      <div class="item"><a href="#">Bill Payments</a></div>
+      <div class="item"><a href="#">Transfer Funds</a></div>
+      <div class="item">
+        <a href="" id="ecoCreditBtn" class="sub-btn">EcoCredit</a>
+        <div id="ecoCreditSubMenu" class="sub-menu" style="display: none;">
+          <a href="./dashboard.html" class="sub-item">Dashboard</a>
+          <a href="./achievement.html" class="sub-item">Achievement</a>
+          <a href="./trends.html" class="sub-item">Trends</a>
+          <a href="./leaderboard.html" class="sub-item">Leaderboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Content for Trends Page -->
+    <div class="main-content">
+      <div class="trend-content">
+          <!-- Image -->
+          <a href="https://hbr.org/topic/subject/sustainable-business-practices" target ="_blank"> <img src="card1.png" alt="Achievement" class="responsive-image" /> </a>
+          <a href="http://www.sustainablecalgary.org" target ="_blank"> <img src="card2.png" alt="Achievement" class="responsive-image" /> </a>
+          <a href="https://docs.google.com/document/d/1GGCkV7CXAs9oHl2YtmucA2zDT5NoLA8PY0RBOYGNY2g/edit?usp=sharing" target ="_balnk"> <img src="card3.png" alt="Achievement" class="responsive-image" /></a>
+      </div>
+    </div>
+
+    <!-- Common scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- Other scripts as needed -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ecoCreditBtn = document.getElementById('ecoCreditBtn');
+            var ecoCreditSubMenu = document.getElementById('ecoCreditSubMenu');
+        
+            ecoCreditBtn.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default link behavior
+                var display = ecoCreditSubMenu.style.display;
+                ecoCreditSubMenu.style.display = display === 'block' ? 'none' : 'block';
+            });
+        
+            // ...rest of your existing JavaScript code...
+        });
+        </script>
+        
+</body>
+</html>
