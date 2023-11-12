@@ -38,71 +38,174 @@
     </div>
   </div>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <table>
-      <!-- Table contents here -->
-    </table>
-  </div>
-
-  <!-- Transactions -->
+<!-- Main Content -->
+<div class="main-content">
+  <!-- Add New Data Button -->
+  <button id="addDataBtn" class="add-data-button">+</button>
+  
+  <!-- Table with integrated data entry form as the first row -->
   <table>
+    <thead>
+      <!-- The header will be populated by JavaScript -->
+    </thead>
+    <tbody>
+      <!-- Data Entry Row (initially hidden) -->
+      <tr id="dataEntryRow" style="display: table-row;">
+        <td><input type="text" id="dateInput" placeholder="YYYY-MM-DD" required></td>
+        <td><input type="text" id="itemInput" placeholder="Item" required></td>
+        <td><input type="text" id="locationInput" placeholder="Location" required></td>
+        <td><input type="text" id="amountInput" placeholder="Amount" required></td>
+        <td><button id="submitDataBtn">Add</button></td>
+      </tr>
+      <!-- Existing table data rows will be dynamically inserted here -->
+    </tbody>
   </table>
+</div>
+
+
+<!-- Hidden form for submission (no visible elements) -->
+<form id="newDataForm" style="display: none;">
+</form>
+
 
   <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
-      // Fetch and parse CSV data
-      fetch("./src/scripts/sample-spending.csv")
-        .then(res => res.text())
-        .then(data => {
-          Papa.parse(data, {
-            complete: function(results) {
-              let rows = results.data;
-              let table = document.querySelector("table");
-  
-              // Create the table header row
-              let headerRow = document.createElement("tr");
-              rows[0].forEach((header, index) => {
-                let th = document.createElement("th");
-                th.textContent = header;
-                if (index >= rows[0].length - 2) { // Hide last two headers
-                  th.classList.add("hide-column");
-                }
-                headerRow.appendChild(th);
-              });
-              table.appendChild(headerRow);
-  
-              // Sort by date (assuming date is in the first column)
-              rows.slice(1).sort((a, b) => {
-                let dateA = new Date(a[0]), dateB = new Date(b[0]);
-                return dateB - dateA; // For descending order
-              }).forEach(row => {
-                let tr = document.createElement("tr");
-                row.forEach((cell, index) => {
-                  let td = document.createElement("td");
-                  td.textContent = cell;
-                  if (index >= row.length - 2) { // Hide last two columns
-                    td.classList.add("hide-column");
-                  }
-                  tr.appendChild(td);
+        // Fetch and parse CSV data
+        fetch("./src/scripts/sample-spending.csv")
+            .then(res => res.text())
+            .then(data => {
+                Papa.parse(data, {
+                    complete: function(results) {
+                        let rows = results.data;
+                        let table = document.querySelector("table");
+
+                        // Create the table header row
+                        let headerRow = document.createElement("tr");
+                        rows[0].forEach((header, index) => {
+                            let th = document.createElement("th");
+                            th.textContent = header;
+                            if (index >= rows[0].length - 2) { // Hide last two headers
+                                th.classList.add("hide-column");
+                            }
+                            headerRow.appendChild(th);
+                        });
+                        table.appendChild(headerRow);
+
+                        // Sort by date (assuming date is in the first column)
+                        rows.slice(1).sort((a, b) => {
+                            let dateA = new Date(a[0]), dateB = new Date(b[0]);
+                            return dateB - dateA; // For descending order
+                        }).forEach(row => {
+                            let tr = document.createElement("tr");
+                            row.forEach((cell, index) => {
+                                let td = document.createElement("td");
+                                td.textContent = cell;
+                                if (index >= row.length - 2) { // Hide last two columns
+                                    td.classList.add("hide-column");
+                                }
+                                tr.appendChild(td);
+                            });
+                            table.appendChild(tr);
+                        });
+                    }
                 });
-                table.appendChild(tr);
-              });
-            }
-          });
+            });
+
+        // Event listener for the EcoCredit button
+        document.getElementById('ecoCreditBtn').addEventListener('click', function(event) {
+            console.log("EcoCredit button clicked"); // Debugging line
+            event.preventDefault(); // Prevents default link behavior
+            var submenu = document.getElementById('ecoCreditSubMenu');
+            submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
         });
-  
-      // Event listener for the EcoCredit button
-document.getElementById('ecoCreditBtn').addEventListener('click', function(event) {
-  console.log("EcoCredit button clicked"); // Debugging line
-  event.preventDefault(); // Prevents default link behavior
-  var submenu = document.getElementById('ecoCreditSubMenu');
-  submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
-});
+
+        // Event listener for Add Data button
+        document.getElementById('addDataBtn').addEventListener('click', function(event) {
+        event.preventDefault();
+        var dataEntryRow = document.getElementById('dataEntryRow');
+        console.log("Toggling data entry row"); // Debugging line
+        dataEntryRow.style.display = dataEntryRow.style.display === 'none' ? 'table-row' : 'none';
+    });
+
+
+
+        // Handle form submission
+    document.getElementById('newDataForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // Get form data
+        let date = document.getElementById('dateInput').value;
+        let item = document.getElementById('itemInput').value;
+        let location = document.getElementById('locationInput').value;
+        let amount = parseFloat(document.getElementById('amountInput').value).toFixed(2);
+
+        // Append new data to CSV
+        let newRow = [date, item, location, amount];
+        appendToCSV(newRow);
+
+        // Reset and hide the data entry row
+        this.reset();
+        document.getElementById('dataEntryRow').style.display = 'none';
+    });
+
+        // Function to append data to CSV and refresh table
+        function appendToCSV(newRow) {
+            // Fetch existing CSV data and append new row
+            fetch("./src/scripts/sample-spending.csv")
+                .then(res => res.text())
+                .then(data => {
+                    Papa.parse(data, {
+                        complete: function(results) {
+                            let rows = results.data;
+                            // Append new row
+                            rows.push(newRow);
+                            // Sort, convert back to CSV and overwrite file
+                            updateAndOverwriteCSV(rows);
+                        }
+                    });
+                });
+        }
+
+        // Function to update CSV data and overwrite existing CSV file
+        function updateAndOverwriteCSV(rows) {
+            // Sort rows by date
+            rows.sort((a, b) => new Date(b[0]) - new Date(a[0]));
+            // Convert to CSV
+            let csv = Papa.unparse(rows);
+            // Overwrite the CSV file here
+            // Since you cannot write to a file from the client side due to browser security,
+            // you will need to implement a server-side solution to handle file writing.
+
+            // Refresh table display
+            refreshTableDisplay(rows);
+        }
+
+    // Function to refresh the table display with new CSV data
+    function refreshTableDisplay(rows) {
+    let table = document.querySelector("table tbody");
+
+    // Clear existing table rows except for the header
+    while (table.firstChild) {
+        table.removeChild(table.firstChild);
+    }
+
+    // Insert the data entry row at the beginning
+    let dataEntryRow = document.getElementById('dataEntryRow');
+    table.appendChild(dataEntryRow.cloneNode(true)); // Clone and insert data entry row
+
+    // Add new data rows to the table
+    rows.slice(1).forEach(row => {
+        let tr = document.createElement("tr");
+        row.forEach(cell => {
+            let td = document.createElement("td");
+            td.textContent = cell;
+            tr.appendChild(td);
+        });
+        table.appendChild(tr);
+    });
+}
 
     });
-  </script>
-  
-
+</script>
 </body>
 </html>
