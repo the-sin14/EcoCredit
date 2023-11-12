@@ -1,8 +1,19 @@
 const { OpenAI } = require("openai");
 require('dotenv').config();
+const csv = require('csv-parser');
+const fs = require('fs');
+const results = [];
 
 const openai = new OpenAI({
     apiKey: process.env.OPEN_AI_KEY,
+});
+
+// csv is stored in array, access it using indexes
+fs.createReadStream('sample_spending.csv')
+    .pipe(csv({}))
+    .on('data', (data) => results.push(data))
+    .on('end', () => {
+        console.log(results[0]);
 });
 
 const runPrompt = async () => {
