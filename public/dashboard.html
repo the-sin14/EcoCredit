@@ -73,7 +73,7 @@
     <script>
         let pie_chart_labels = ["Sustainable Products", "Non-sustainable Products"];
         let bar_chart_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        let totalSpending, totalSustainableSpending, totalEcoPoints;    
+        let totalSpending, totalSustainableSpending, totalEcoPoints, totalEcoPointsJan, totalEcoPointsFeb, totalEcoPointsMar, totalEcoPointsApr, totalEcoPointsMay, totalEcoPointsJun, totalEcoPointsJul, totalEcoPointsAug, totalEcoPointsSep, totalEcoPointsOct, totalEcoPointsNov, totalEcoPointsDec;    
     
         document.addEventListener('DOMContentLoaded', function() {
         fetch('/data/sample-spending.csv')
@@ -83,7 +83,7 @@
                     header: true,
                     complete: function(results) {
                         let data = results.data;
-                        console.log(data); // Do something with the data
+                        // console.log(data); // Do something with the data
                         
                         //AI
 
@@ -100,7 +100,7 @@
                 complete: function (results) {
                     // 2D array with all transactions
                     data = results.data;
-                    console.log(data);
+                    // console.log(data);
 
                     // EcoPoints
                     totalEcoPoints = data.reduce((accumulator, item) => {
@@ -129,14 +129,229 @@
                     }, 0);
                     
                     // Bar Chart
-                    
+                    totalEcoPointsJan = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 1) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsFeb = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 2) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsMar = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 3) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsApr = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 4) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsMay = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 5) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsJun = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 6) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsJul = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 7) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsAug = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 8) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsSep = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 9) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsOct = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 10) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    // Use reduce to sum up 'EcoPoints' for entries made in the current month
+                    totalEcoPointsNov = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 11) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
+
+                    totalEcoPointsDec = data.reduce((accumulator, item) => {
+                        // Check if the 'Date' property exists and is in the format 'YYYY-MM-DD'
+                        if (item.Date && /\d{4}-\d{2}-\d{2}/.test(item.Date)) {
+                            // Extract the month part from the 'Date' string
+                            let entryMonth = parseInt(item.Date.split('-')[1], 10);
+
+                            // Check if the entry is from November (assuming the month is represented as 2 digits)
+                            if (entryMonth === 12) {
+                                // Check if 'EcoPoints' property exists and is a valid number
+                                if (item.EcoCredit !== undefined && !isNaN(parseFloat(item.EcoCredit))) {
+                                    // Add 'EcoCredit' value to the accumulator
+                                    accumulator += parseFloat(item.EcoCredit);
+                                }
+                            }
+                        }
+                        return accumulator;
+                    }, 0);
 
                     new Chart(document.getElementById('pie-chart'), {
                         type: 'pie',
                         data: {
                             labels: pie_chart_labels,
                             datasets: [{
-                                backgroundColor: ["#e66346", "#254BD0", "#ffbe0b"],
+                                backgroundColor: ["#B7D0E4", "#808080"],
                                 data: [totalSpending, totalSustainableSpending]
                             }]
                         }
@@ -147,8 +362,9 @@
                         data: {
                             labels: bar_chart_labels,
                             datasets: [{
-                                backgroundColor: ["#e66346", "#254BD0", "#ffbe0b"],
-                                data: [343, 434, 123, 436, 564, 745, 454, 676, 234, 324, 565, 0]
+                                label: "Points",
+                                backgroundColor: ["#B7D0E4"],
+                                data: [totalEcoPointsJan, totalEcoPointsFeb, totalEcoPointsMar, totalEcoPointsApr, totalEcoPointsMay, totalEcoPointsJun, totalEcoPointsJul, totalEcoPointsAug, totalEcoPointsSep, totalEcoPointsOct, totalEcoPointsNov, totalEcoPointsDec]
                             }]
                         }
                     })
