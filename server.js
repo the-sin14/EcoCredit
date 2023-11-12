@@ -33,32 +33,38 @@ app.get('/', (req, res) => {
 });
 
 // In your server.js
-app.get('/dashboard', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/dashboard.html'));
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
 });
 
+// Define the csvWriter variable at the top level
+const csvFilePath = path.join(__dirname, 'public', 'sample-spending.csv');
+
+const csvWriter = createObjectCsvWriter({
+  path: csvFilePath, // Correct path to your existing CSV file
+  header: [
+    { id: 'date', title: 'DATE' },
+    { id: 'item', title: 'ITEM' },
+    { id: 'location', title: 'LOCATION' },
+    { id: 'amount', title: 'AMOUNT' }
+  ],
+  append: true
+});
 
 // Add a server endpoint to handle form submissions and update the CSV file
 app.post('/addData', (req, res) => {
   const newData = req.body;
-  // Updated path to point to the existing sample-spending.csv file
-  const csvFilePath = path.join(__dirname, 'src', 'scripts', 'sample-spending.csv');
-
-  const csvWriter = createObjectCsvWriter({
-    path: csvFilePath, // Correct path to your existing CSV file
-    header: [
-      { id: 'date', title: 'DATE' },
-      { id: 'item', title: 'ITEM' },
-      { id: 'location', title: 'LOCATION' },
-      { id: 'amount', title: 'AMOUNT' }
-    ],
-    append: true
-  });
 
   csvWriter
     .writeRecords([newData])
-    .then(() => res.json({ message: 'Data added successfully' }))
-    .catch(error => res.status(500).json({ message: 'Internal Server Error', error }));
+    .then(() => {
+      console.log('Data added successfully');
+      res.json({ message: 'Data added successfully' });
+    })
+    .catch(error => {
+      console.error('Error writing to CSV:', error);
+      res.status(500).json({ message: 'Internal Server Error', error });
+    });
 });
 
 // Start the server
