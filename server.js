@@ -41,6 +41,7 @@ app.get('/dashboard', (req, res) => {
 // Add a server endpoint to handle form submissions and update the CSV file
 app.post('/addData', (req, res) => {
   const newData = req.body;
+  console.log("Received data:", newData);  // Log received data
 
   // Updated path to point to the existing sample-spending.csv file
   const csvFilePath = path.join(__dirname, 'src', 'scripts', 'sample-spending.csv');
