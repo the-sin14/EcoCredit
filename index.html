@@ -6,6 +6,8 @@
   <title>Document</title>
   <link rel="stylesheet" href="index.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
 </head>
 <body>
   <!-- Navbar -->
@@ -25,8 +27,8 @@
       <div class="item"><a href="#">Bill Payments</a></div>
       <div class="item"><a href="#">Transfer Funds</a></div>
       <div class="item">
-        <a href="#" class="sub-btn">EcoCredit</a>
-        <div class="sub-menu">
+        <a href="#" id="ecoCreditBtn" class="sub-btn">EcoCredit</a>
+        <div id="ecoCreditSubMenu" class="sub-menu" style="display: none;">
           <a href="#" class="sub-item">Dashboard</a>
           <a href="#" class="sub-item">Achievement</a>
           <a href="#" class="sub-item">Trends</a>
@@ -36,48 +38,71 @@
     </div>
   </div>
 
+  <!-- Main Content -->
+  <div class="main-content">
+    <table>
+      <!-- Table contents here -->
+    </table>
+  </div>
+
   <!-- Transactions -->
   <table>
-
   </table>
 
   <script type="text/javascript">
-    onload = fetch("./src/scripts/sample-spending.csv")
-      .then((res) => res.text())
-      .then((data) => {
-        let rows = data.split('\n'); // Split by newline to get rows
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fetch and parse CSV data
+      fetch("./src/scripts/sample-spending.csv")
+        .then(res => res.text())
+        .then(data => {
+          Papa.parse(data, {
+            complete: function(results) {
+              let rows = results.data;
+              let table = document.querySelector("table");
   
-        // Create the table header row
-        let headerRow = document.createElement("tr");
-        let headerColumns = rows[0].split(',');
-        headerColumns.forEach((column) => {
-          let th = document.createElement("th");
-          th.textContent = column;
-          headerRow.appendChild(th);
-        });
-        document.querySelector("table").appendChild(headerRow);
+              // Create the table header row
+              let headerRow = document.createElement("tr");
+              rows[0].forEach((header, index) => {
+                let th = document.createElement("th");
+                th.textContent = header;
+                if (index >= rows[0].length - 2) { // Hide last two headers
+                  th.classList.add("hide-column");
+                }
+                headerRow.appendChild(th);
+              });
+              table.appendChild(headerRow);
   
-        // Process data rows
-        for (let i = 1; i < rows.length; i++) {
-          let columns = rows[i].split(',');
-          let tr = document.createElement("tr");
-  
-          columns.forEach((cell) => {
-            let td = document.createElement("td");
-            td.textContent = cell;
-            tr.appendChild(td);
+              // Sort by date (assuming date is in the first column)
+              rows.slice(1).sort((a, b) => {
+                let dateA = new Date(a[0]), dateB = new Date(b[0]);
+                return dateB - dateA; // For descending order
+              }).forEach(row => {
+                let tr = document.createElement("tr");
+                row.forEach((cell, index) => {
+                  let td = document.createElement("td");
+                  td.textContent = cell;
+                  if (index >= row.length - 2) { // Hide last two columns
+                    td.classList.add("hide-column");
+                  }
+                  tr.appendChild(td);
+                });
+                table.appendChild(tr);
+              });
+            }
           });
-  
-          document.querySelector("table").appendChild(tr);
-        }
-  
-        // Hide elements related to "Eco Credit" using CSS
-        let hideItems = document.querySelectorAll(".hide-item");
-        hideItems.forEach((item) => {
-          item.style.display = "none";
         });
-      });
+  
+      // Event listener for the EcoCredit button
+document.getElementById('ecoCreditBtn').addEventListener('click', function(event) {
+  console.log("EcoCredit button clicked"); // Debugging line
+  event.preventDefault(); // Prevents default link behavior
+  var submenu = document.getElementById('ecoCreditSubMenu');
+  submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+});
+
+    });
   </script>
+  
 
 </body>
 </html>
